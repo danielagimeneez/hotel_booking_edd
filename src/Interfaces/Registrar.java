@@ -4,6 +4,17 @@
  * and open the template in the editor.
  */
 package Interfaces;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
@@ -17,6 +28,8 @@ public class Registrar extends javax.swing.JFrame {
     public Registrar() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,6 +41,9 @@ public class Registrar extends javax.swing.JFrame {
     private void initComponents() {
 
         Regresar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -35,6 +51,15 @@ public class Registrar extends javax.swing.JFrame {
         Regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RegresarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Clientes en el hotel");
+
+        jButton1.setText("Cargar excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -46,18 +71,31 @@ public class Registrar extends javax.swing.JFrame {
                 .addContainerGap(312, Short.MAX_VALUE)
                 .addComponent(Regresar)
                 .addGap(24, 24, 24))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Regresar)
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
         // TODO add your handling code here:
         dispose();
@@ -68,6 +106,257 @@ public class Registrar extends javax.swing.JFrame {
         MainMenu.setTitle("Hotel");
         MainMenu.setVisible(true);
     }//GEN-LAST:event_RegresarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //Aqui importe Scanner para probar los input.. No se porque esta fastidioso copiarlo a un JTextFile :(
+        //Hay que imprimir todos los nombres y apellidos en ese JTextFile y ponerlos en el HashTable.. la key podria ser el nombre y el apellido
+        //Y el value pordia ser el num de habitacion
+
+        
+                        //---------------------------------------------- BUSCAR EL NUMERO DE HABITACION -----------------------------------------------------
+
+        JFileChooser fileChooser = new JFileChooser();
+
+        // Mostrar el dialogo de seleccion de archivo
+        int result = fileChooser.showOpenDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // Obtener el archivo seleccionado
+            File selectedFile = fileChooser.getSelectedFile();
+
+            try {
+                // Cargar el archivo de Excel seleccionado
+                FileInputStream fis = new FileInputStream(selectedFile);
+                Workbook workbook = new XSSFWorkbook(fis);
+
+                // Obtener la segunda pagina de Excel (índice 1)
+                Sheet sheet = workbook.getSheetAt(1);
+
+                // Iterar sobre las filas
+                for (Row row : sheet) {
+                    Cell cell = row.getCell(0); // Obtener la primera celda
+
+                    if (cell != null) {
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                System.out.println(cell.getStringCellValue());
+                                break;
+                            case NUMERIC:
+                                System.out.println(cell.getNumericCellValue());
+                                break;
+                            case BOOLEAN:
+                                System.out.println(cell.getBooleanCellValue());
+                                break;
+                            default:
+                                // No hacer nada para otros tipos de celda
+                        }
+                    }
+                }
+
+                // Cerrar el archivo
+                workbook.close();
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        
+                //---------------------------------------------- BUSCAR EL NUMERO DE HABITACION -----------------------------------------------------
+
+        
+        
+                //---------------------------------------------- BUSCAR EL APELLIDO DEL CLIENTE -----------------------------------------------------
+
+//        JFileChooser fileChooser = new JFileChooser();
+//
+//        // Mostrar el dialogo de selección de archivo
+//        int result = fileChooser.showOpenDialog(null);
+//
+//        if (result == JFileChooser.APPROVE_OPTION) {
+//            // Obtener el archivo seleccionado
+//            File selectedFile = fileChooser.getSelectedFile();
+//
+//            try {
+//                // Cargar el archivo de Excel seleccionado
+//                FileInputStream fis = new FileInputStream(selectedFile);
+//                Workbook workbook = new XSSFWorkbook(fis);
+//
+//                // Obtener la primera hoja de Excel
+//                Sheet sheet = workbook.getSheetAt(0);
+//
+//                // Obtener el contenido a buscar del usuario
+//                Scanner scanner = new Scanner(System.in);
+//                System.out.print("Ingrese el contenido a buscar: ");
+//                String contenidoBuscado = scanner.nextLine();
+//
+//                boolean encontrado = buscarContenidoEnExcel(sheet, contenidoBuscado);
+//
+//                if (encontrado) {
+//                    System.out.println("Si se encontro.");
+//                } else {
+//                    System.out.println("No se encontro.");
+//                }
+//
+//                // Cerrar el archivo
+//                workbook.close();
+//                fis.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//
+//    public static boolean buscarContenidoEnExcel(Sheet sheet, String contenido) {
+//        // Iterar sobre las filas
+//        for (Row row : sheet) {
+//            Cell cellB = row.getCell(1); // Obtener la celda B
+//            Cell cellC = row.getCell(2); // Obtener la celda C
+//
+//            if (cellB != null && cellC != null && cellB.getCellType() == CellType.STRING && cellC.getCellType() == CellType.STRING) {
+//                String cellValueB = cellB.getStringCellValue();
+//                String cellValueC = cellC.getStringCellValue();
+//
+//                if (cellValueB.equals(contenido) || cellValueC.equals(contenido)) {
+//                    return true; // Se encontró el contenido en el archivo de Excel
+//                }
+//            }
+//        }
+//
+//        return false; // No se encontró el contenido en el archivo de Excel
+                        //---------------------------------------------- BUSCAR EL APELLIDO DEL CLIENTE -----------------------------------------------------
+
+    
+        
+        //---------------------------------------------- BUSCAR EL NOMBRE DEL CLIENTE -----------------------------------------------------
+//        JFileChooser fileChooser = new JFileChooser();
+//
+//        // Mostrar el dialogo de selección de archivo
+//        int result = fileChooser.showOpenDialog(null);
+//
+//        if (result == JFileChooser.APPROVE_OPTION) {
+//            // Obtener el archivo seleccionado
+//            File selectedFile = fileChooser.getSelectedFile();
+//
+//            try {
+//                // Cargar el archivo de Excel seleccionado
+//                FileInputStream fis = new FileInputStream(selectedFile);
+//                Workbook workbook = new XSSFWorkbook(fis);
+//
+//                // Obtener la primera hoja de Excel
+//                Sheet sheet = workbook.getSheetAt(0);
+//
+//                // Obtener el contenido a buscar del usuario
+//                Scanner scanner = new Scanner(System.in);
+//                System.out.print("Ingrese el contenido a buscar: ");
+//                String contenidoBuscado = scanner.nextLine();
+//
+//                boolean encontrado = buscarContenidoEnExcel(sheet, contenidoBuscado);
+//
+//                if (encontrado) {
+//                    System.out.println("Se encontro.");
+//                } else {
+//                    System.out.println("No se encontro.");
+//                }
+//
+//                // Cerrar el archivo
+//                workbook.close();
+//                fis.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//
+//    public static boolean buscarContenidoEnExcel(Sheet sheet, String contenido) {
+//        // Iterar sobre las filas
+//        for (Row row : sheet) {
+//            // Iterar sobre las celdas de la fila
+//            for (Cell cell : row) {
+//                if (cell != null && cell.getCellType() == CellType.STRING) {
+//                    String cellValue = cell.getStringCellValue();
+//                    if (cellValue.equals(contenido)) {
+//                        return true; // Se encontro el contenido en el archivo de Excel
+//                    }
+//                }
+//            }
+//        }
+//
+//        return false; // No se encontro el contenido en el archivo de Excel
+            //---------------------------------------------- BUSCAR EL NOMBRE DEL CLIENTE -----------------------------------------------------
+
+        
+        //---------------------------------------------- IMPRIMIR TODOS LOS CLIENTES-----------------------------------------------------
+//        JFileChooser fileChooser = new JFileChooser();
+//
+//        // Mostrar el dialogo de selección de archivo
+//        int result = fileChooser.showOpenDialog(null);
+//
+//        if (result == JFileChooser.APPROVE_OPTION) {
+//            // Obtener el archivo seleccionado
+//            File selectedFile = fileChooser.getSelectedFile();
+//
+//            try {
+//                // Cargar el archivo de Excel seleccionado
+//                FileInputStream fis = new FileInputStream(selectedFile);
+//                Workbook workbook = new XSSFWorkbook(fis);
+//
+//                // Obtener la primera hoja de Excel
+//                Sheet sheet = workbook.getSheetAt(0);
+//
+//                // Iterar sobre las filas y obtener el contenido de las columnas B y C
+//                for (Row row : sheet) {
+//                    Cell cellB = row.getCell(1); // Obtener la celda B
+//                    Cell cellC = row.getCell(2); // Obtener la celda C
+//
+//                    if (cellB != null && cellC != null) {
+//                        switch (cellB.getCellType()) {
+//                            case STRING:
+//                                System.out.print(cellB.getStringCellValue() + "\t");
+//                                break;
+//                            case NUMERIC:
+//                                System.out.print(cellB.getNumericCellValue() + "\t");
+//                                break;
+//                            case BOOLEAN:
+//                                System.out.print(cellB.getBooleanCellValue() + "\t");
+//                                break;
+//                            case BLANK:
+//                                System.out.print("\t");
+//                                break;
+//                            default:
+//                                System.out.print("\t");
+//                        }
+//
+//                        switch (cellC.getCellType()) {
+//                            case STRING:
+//                                System.out.println(cellC.getStringCellValue());
+//                                break;
+//                            case NUMERIC:
+//                                System.out.println(cellC.getNumericCellValue());
+//                                break;
+//                            case BOOLEAN:
+//                                System.out.println(cellC.getBooleanCellValue());
+//                                break;
+//                            case BLANK:
+//                                System.out.println("");
+//                                break;
+//                            default:
+//                                System.out.println("");
+//                        }
+//                    }
+//                }
+//
+//                // Cerrar el archivo
+//                workbook.close();
+//                fis.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        //---------------------------------------------- IMPRIMIR TODOS LOS CLIENTES-----------------------------------------------------
+        
+    
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -106,5 +395,8 @@ public class Registrar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Regresar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
