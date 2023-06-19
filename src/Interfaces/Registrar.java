@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 package Interfaces;
+import Funciones.Excel;
+import HashTable.Hashtable;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Scanner;
+import org.apache.poi.ss.usermodel.Sheet;
+
+
 
 /**
  *
@@ -42,8 +42,13 @@ public class Registrar extends javax.swing.JFrame {
 
         Regresar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ClientesImprimir = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        ApellidoBuscar = new javax.swing.JTextField();
+        Buscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,21 +68,50 @@ public class Registrar extends javax.swing.JFrame {
             }
         });
 
+        ClientesImprimir.setColumns(20);
+        ClientesImprimir.setRows(5);
+        jScrollPane1.setViewportView(ClientesImprimir);
+
+        jLabel2.setText("Ingrese el nombre y apellido del cliente");
+
+        jLabel3.setText("para saber el numero de la habitacion se encuentra");
+
+        ApellidoBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApellidoBuscarActionPerformed(evt);
+            }
+        });
+
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(312, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Regresar)
                 .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(Buscar)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(40, 40, 40)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(ApellidoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,7 +121,16 @@ public class Registrar extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ApellidoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Buscar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addContainerGap(12, Short.MAX_VALUE))
@@ -115,52 +158,7 @@ public class Registrar extends javax.swing.JFrame {
 
         
                         //---------------------------------------------- BUSCAR EL NUMERO DE HABITACION -----------------------------------------------------
-
-        JFileChooser fileChooser = new JFileChooser();
-
-        // Mostrar el dialogo de seleccion de archivo
-        int result = fileChooser.showOpenDialog(null);
-
-        if (result == JFileChooser.APPROVE_OPTION) {
-            // Obtener el archivo seleccionado
-            File selectedFile = fileChooser.getSelectedFile();
-
-            try {
-                // Cargar el archivo de Excel seleccionado
-                FileInputStream fis = new FileInputStream(selectedFile);
-                Workbook workbook = new XSSFWorkbook(fis);
-
-                // Obtener la segunda pagina de Excel (índice 1)
-                Sheet sheet = workbook.getSheetAt(1);
-
-                // Iterar sobre las filas
-                for (Row row : sheet) {
-                    Cell cell = row.getCell(0); // Obtener la primera celda
-
-                    if (cell != null) {
-                        switch (cell.getCellType()) {
-                            case STRING:
-                                System.out.println(cell.getStringCellValue());
-                                break;
-                            case NUMERIC:
-                                System.out.println(cell.getNumericCellValue());
-                                break;
-                            case BOOLEAN:
-                                System.out.println(cell.getBooleanCellValue());
-                                break;
-                            default:
-                                // No hacer nada para otros tipos de celda
-                        }
-                    }
-                }
-
-                // Cerrar el archivo
-                workbook.close();
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+                
         
                 //---------------------------------------------- BUSCAR EL NUMERO DE HABITACION -----------------------------------------------------
 
@@ -312,6 +310,7 @@ public class Registrar extends javax.swing.JFrame {
 //                    if (cellB != null && cellC != null) {
 //                        switch (cellB.getCellType()) {
 //                            case STRING:
+//                                ClientesImprimir.
 //                                System.out.print(cellB.getStringCellValue() + "\t");
 //                                break;
 //                            case NUMERIC:
@@ -353,10 +352,118 @@ public class Registrar extends javax.swing.JFrame {
 //                e.printStackTrace();
 //            }
 //        }
+
+
+
+
+
+
+
+
+JFileChooser fileChooser = new JFileChooser();
+int result = fileChooser.showOpenDialog(null);
+
+if (result == JFileChooser.APPROVE_OPTION) {
+    File selectedFile = fileChooser.getSelectedFile();
+
+    try {
+        FileInputStream fis = new FileInputStream(selectedFile);
+        Workbook workbook = new XSSFWorkbook(fis);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        StringBuilder sb = new StringBuilder();
+
+        int contador = 0;
+
+        for (Row row : sheet) {
+            Cell cellB = row.getCell(1);
+            Cell cellC = row.getCell(2);
+
+            if (cellB != null && cellC != null) {
+                switch (cellB.getCellType()) {
+                    case STRING:
+                        sb.append(cellB.getStringCellValue()).append("\t");
+                        break;
+                    case NUMERIC:
+                        sb.append(cellB.getNumericCellValue()).append("\t");
+                        break;
+                    case BOOLEAN:
+                        sb.append(cellB.getBooleanCellValue()).append("\t");
+                        break;
+                    case BLANK:
+                        sb.append("\t");
+                        break;
+                    default:
+                        sb.append("\t");
+                }
+
+                switch (cellC.getCellType()) {
+                    case STRING:
+                        sb.append(cellC.getStringCellValue());
+                        break;
+                    case NUMERIC:
+                        sb.append(cellC.getNumericCellValue());
+                        break;
+                    case BOOLEAN:
+                        sb.append(cellC.getBooleanCellValue());
+                        break;
+                    case BLANK:
+                        break;
+                    default:
+                        break;
+                }
+
+                contador++;
+
+                if (contador % 1 == 0) {
+                    sb.append("\n\n");
+                } else {
+                    sb.append("\n");
+                }
+            }
+        }
+
+        workbook.close();
+        fis.close();
+
+        ClientesImprimir.setText(sb.toString());
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
         //---------------------------------------------- IMPRIMIR TODOS LOS CLIENTES-----------------------------------------------------
         
     
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void ApellidoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ApellidoBuscarActionPerformed
+
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        // TODO add your handling code here:
+        Hashtable hashtable = new Hashtable();
+        //hashtable.guardarElementosEnHashtable();
+        hashtable.registros();
+        //hashtable.imprimirValues();
+        //hashtable.imprimirKeys();
+        hashtable.imprimirValues();
+        //String juan = ApellidoBuscar.getText();
+        //hashtable.buscarValor2(juan);
+        
+        
+        
+        //IMPRIMIR TODA LA COLUMNA SOLO IMPRIME LA PRIMERA CELDA
+        //Numero de hab:
+        //readExcelSecondColumn();
+        //Nombres:
+        //printSecondColumnElements();
+
+    }//GEN-LAST:event_BuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,9 +501,14 @@ public class Registrar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ApellidoBuscar;
+    private javax.swing.JButton Buscar;
+    private javax.swing.JTextArea ClientesImprimir;
     private javax.swing.JButton Regresar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

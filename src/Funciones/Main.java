@@ -26,12 +26,7 @@ public class Main {
         Hashtable hashtable = new Hashtable();
 
         // Agregar elementos a la Hashtable
-        hashtable.agregar("Kay McPherson", 2);
-        hashtable.agregar("Naranja", 5);
-        hashtable.agregar(28101757, "Hola");
-        hashtable.eliminarElemento("Naranja");
-        hashtable.buscarValor("Kay McPherson");
-        hashtable.BusquedsaDeReservacion(28101757);
+        
 
         // Mostrar los elementos en pantalla
         //hashtable.mostrarHashtable();
