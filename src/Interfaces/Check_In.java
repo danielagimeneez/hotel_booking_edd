@@ -8,6 +8,7 @@ package Interfaces;
 import static Funciones.Excel.verificarNumeroEnColumnaPagina3;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import HashTable.Hashtable;
 
 /**
  *
@@ -113,12 +114,9 @@ public class Check_In extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5))))
-                        .addGap(31, 31, 31)
+                            .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -183,10 +181,14 @@ public class Check_In extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addComponent(jLabel6)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11)
@@ -233,8 +235,13 @@ public class Check_In extends javax.swing.JFrame {
         if (Habitacion.getText().isEmpty())
         if (resultado == true){
             JOptionPane.showMessageDialog(rootPane, "Usuario registrado con exito");
+            Hashtable hashtable = new Hashtable();
+            //Agregar por cedula
+            hashtable.agregar(Cedula.getText(), Nombre.getText());
+            //Agregar por nombre
+            hashtable.agregar(Nombre.getText(), Habitacion.getText());
         }else{
-            JOptionPane.showMessageDialog(rootPane, "La habitacion numero "+Disponible+" esta ocupada");
+            JOptionPane.showMessageDialog(rootPane, "La habitacion numero "+ Disponible+" esta ocupada");
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed

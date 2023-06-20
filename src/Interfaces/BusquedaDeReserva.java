@@ -6,7 +6,7 @@
 package Interfaces;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import HashTable.Hashtable;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +36,8 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Cedula = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +55,14 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Ingresar la cedula del cliente");
+
+        Cedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CedulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -62,8 +72,15 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(15, 15, 15))
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Cedula))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -71,9 +88,13 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addGap(97, 97, 97)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addComponent(jButton2)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -93,6 +114,12 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        Hashtable hashtable = new Hashtable();
+        //hashtable.guardarKeysYValues();
+        hashtable.imprimirKeysYValues();
+        
+        
+        
                                     //-----------------------------------------------IMPRIMIR TODOS LOS DATOS-----------------------------------------------
                                     
 //        JFileChooser fileChooser = new JFileChooser();
@@ -289,6 +316,11 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
         //-----------------------------------------------IMPRIMIR CEDULAS-----------------------------------------------
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void CedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CedulaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_CedulaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -325,7 +357,9 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Cedula;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

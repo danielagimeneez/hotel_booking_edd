@@ -155,6 +155,65 @@ public class Registrar extends javax.swing.JFrame {
         //Aqui importe Scanner para probar los input.. No se porque esta fastidioso copiarlo a un JTextFile :(
         //Hay que imprimir todos los nombres y apellidos en ese JTextFile y ponerlos en el HashTable.. la key podria ser el nombre y el apellido
         //Y el value pordia ser el num de habitacion
+    JFileChooser fileChooser = new JFileChooser();
+    int result = fileChooser.showOpenDialog(null);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+
+        try {
+            FileInputStream fis = new FileInputStream(selectedFile);
+            Workbook workbook = new XSSFWorkbook(fis);
+
+            // Obtener la tercera página del libro de Excel
+            Sheet sheet = workbook.getSheetAt(2);
+
+            // Crear un JTextArea para mostrar el contenido
+            JTextArea textArea = new JTextArea();
+
+            // Iterar por cada fila y obtener los valores de las celdas de la columna 2 y 3
+            for (Row row : sheet) {
+                Cell cell2 = row.getCell(1); // Columna 2
+                Cell cell3 = row.getCell(2); // Columna 3
+
+                if (cell2 != null && cell3 != null) {
+                    Object value2 = getCellValue(cell2);
+                    Object value3 = getCellValue(cell3);
+
+                    // Verificar si el valor de la celda es "primer_nombre" o "apellido"
+                    if (!"primer_nombre".equals(value2) && !"apellido".equals(value3)) {
+                        // Agregar los valores al JTextArea
+                        ClientesImprimir.append(value2 + "\t" + value3 + "\n");
+                    }
+                }
+            }
+
+            
+
+            workbook.close();
+            fis.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+private Object getCellValue(Cell cell) {
+    switch (cell.getCellType()) {
+        case STRING:
+            return cell.getStringCellValue();
+        case NUMERIC:
+            if (DateUtil.isCellDateFormatted(cell)) {
+                return cell.getDateCellValue();
+            } else {
+                return cell.getNumericCellValue();
+            }
+        case BOOLEAN:
+            return cell.getBooleanCellValue();
+        default:
+            return null;
+    }
 
         
                         //---------------------------------------------- BUSCAR EL NUMERO DE HABITACION -----------------------------------------------------
@@ -360,78 +419,78 @@ public class Registrar extends javax.swing.JFrame {
 
 
 
-JFileChooser fileChooser = new JFileChooser();
-int result = fileChooser.showOpenDialog(null);
-
-if (result == JFileChooser.APPROVE_OPTION) {
-    File selectedFile = fileChooser.getSelectedFile();
-
-    try {
-        FileInputStream fis = new FileInputStream(selectedFile);
-        Workbook workbook = new XSSFWorkbook(fis);
-        Sheet sheet = workbook.getSheetAt(0);
-
-        StringBuilder sb = new StringBuilder();
-
-        int contador = 0;
-
-        for (Row row : sheet) {
-            Cell cellB = row.getCell(1);
-            Cell cellC = row.getCell(2);
-
-            if (cellB != null && cellC != null) {
-                switch (cellB.getCellType()) {
-                    case STRING:
-                        sb.append(cellB.getStringCellValue()).append("\t");
-                        break;
-                    case NUMERIC:
-                        sb.append(cellB.getNumericCellValue()).append("\t");
-                        break;
-                    case BOOLEAN:
-                        sb.append(cellB.getBooleanCellValue()).append("\t");
-                        break;
-                    case BLANK:
-                        sb.append("\t");
-                        break;
-                    default:
-                        sb.append("\t");
-                }
-
-                switch (cellC.getCellType()) {
-                    case STRING:
-                        sb.append(cellC.getStringCellValue());
-                        break;
-                    case NUMERIC:
-                        sb.append(cellC.getNumericCellValue());
-                        break;
-                    case BOOLEAN:
-                        sb.append(cellC.getBooleanCellValue());
-                        break;
-                    case BLANK:
-                        break;
-                    default:
-                        break;
-                }
-
-                contador++;
-
-                if (contador % 1 == 0) {
-                    sb.append("\n\n");
-                } else {
-                    sb.append("\n");
-                }
-            }
-        }
-
-        workbook.close();
-        fis.close();
-
-        ClientesImprimir.setText(sb.toString());
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
+//JFileChooser fileChooser = new JFileChooser();
+//int result = fileChooser.showOpenDialog(null);
+//
+//if (result == JFileChooser.APPROVE_OPTION) {
+//    File selectedFile = fileChooser.getSelectedFile();
+//
+//    try {
+//        FileInputStream fis = new FileInputStream(selectedFile);
+//        Workbook workbook = new XSSFWorkbook(fis);
+//        Sheet sheet = workbook.getSheetAt(0);
+//
+//        StringBuilder sb = new StringBuilder();
+//
+//        int contador = 0;
+//
+//        for (Row row : sheet) {
+//            Cell cellB = row.getCell(1);
+//            Cell cellC = row.getCell(2);
+//
+//            if (cellB != null && cellC != null) {
+//                switch (cellB.getCellType()) {
+//                    case STRING:
+//                        sb.append(cellB.getStringCellValue()).append("\t");
+//                        break;
+//                    case NUMERIC:
+//                        sb.append(cellB.getNumericCellValue()).append("\t");
+//                        break;
+//                    case BOOLEAN:
+//                        sb.append(cellB.getBooleanCellValue()).append("\t");
+//                        break;
+//                    case BLANK:
+//                        sb.append("\t");
+//                        break;
+//                    default:
+//                        sb.append("\t");
+//                }
+//
+//                switch (cellC.getCellType()) {
+//                    case STRING:
+//                        sb.append(cellC.getStringCellValue());
+//                        break;
+//                    case NUMERIC:
+//                        sb.append(cellC.getNumericCellValue());
+//                        break;
+//                    case BOOLEAN:
+//                        sb.append(cellC.getBooleanCellValue());
+//                        break;
+//                    case BLANK:
+//                        break;
+//                    default:
+//                        break;
+//                }
+//
+//                contador++;
+//
+//                if (contador % 1 == 0) {
+//                    sb.append("\n\n");
+//                } else {
+//                    sb.append("\n");
+//                }
+//            }
+//        }
+//
+//        workbook.close();
+//        fis.close();
+//
+//        ClientesImprimir.setText(sb.toString());
+//
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+//}
 
 
 
@@ -449,11 +508,11 @@ if (result == JFileChooser.APPROVE_OPTION) {
         Hashtable hashtable = new Hashtable();
         //hashtable.guardarElementosEnHashtable();
         hashtable.registros();
-        //hashtable.imprimirValues();
-        //hashtable.imprimirKeys();
         hashtable.imprimirValues();
-        //String juan = ApellidoBuscar.getText();
-        //hashtable.buscarValor2(juan);
+        //hashtable.imprimirKeys();
+        //Falta decir cuando la habitacion esta vacia y cuando no
+        String juan = ApellidoBuscar.getText();
+        hashtable.buscarValor2(juan);
         
         
         

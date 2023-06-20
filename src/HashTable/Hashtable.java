@@ -17,6 +17,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import static Funciones.Excel.printSecondColumnElements;
 import static Funciones.Excel.readExcelSecondColumn;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.DateUtil;
 
@@ -74,13 +75,13 @@ public class Hashtable {
     while (entry != null) {
         if (entry.getKey().equals(key)) {
             Object value = entry.getValue();
-            if (value == null) {
-                System.out.println("La habitación " + key + " está libre");
-            } else {
-                System.out.println("El cliente " + key + " está hospedado en la habitación " + value);
-            }
-            return;
+        if (value == null) {
+            System.out.println("La habitación " + key + " está libre");
+        } else {
+            System.out.println("El cliente " + key + " está hospedado en la habitación " + value);
         }
+        return;
+    }
         entry = entry.getNext();
     }
 
@@ -93,7 +94,7 @@ public class Hashtable {
         int hash = getHash(key);
         Entry entry = table[hash];
 
-        while (entry != null) {
+        //while (entry != null) {
             if (entry.getKey().equals(key)) {
                 // Realiza la búsqueda de reservación
                 System.err.println("Si existe, el value es: "+entry.getValue());
@@ -102,8 +103,8 @@ public class Hashtable {
             entry = entry.getNext();
         }
 
-        System.out.println("El cliente " + key + " no existe");
-    }
+        //System.out.println("El cliente " + key + " no existe");
+    
     
     public void eliminarElemento(Object key) {
         int hash = getHash(key);
@@ -363,13 +364,181 @@ public class Hashtable {
         }
     }
 }
+   
+   
+   
+   public void imprimirFilasDeExcel() {
+    JFileChooser fileChooser = new JFileChooser();
+    int result = fileChooser.showOpenDialog(null);
 
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
 
-    
+        try {
+            FileInputStream fis = new FileInputStream(selectedFile);
+            Workbook workbook = new XSSFWorkbook(fis);
 
+            // Obtener la primera página del libro de Excel
+            Sheet sheet = workbook.getSheetAt(0);
 
-    
+            // Iterar por cada fila y cada celda e imprimir su valor
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+                    Object value = getCellValue(cell);
+                    System.out.print(value + "\t");
+                }
+                System.out.println(); // Saltar a la siguiente línea después de imprimir una fila completa
+            }
+
+            workbook.close();
+            fis.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+   
+   private Object getCellValue(Cell cell) {
+    switch (cell.getCellType()) {
+        case STRING:
+            return cell.getStringCellValue();
+        case NUMERIC:
+            if (DateUtil.isCellDateFormatted(cell)) {
+                return cell.getDateCellValue();
+            } else {
+                return cell.getNumericCellValue();
+            }
+        case BOOLEAN:
+            return cell.getBooleanCellValue();
+        default:
+            return null;
+    }
+}
+
+private class RowValue {
+    private Object[] values;
+
+    public RowValue() {
+        values = new Object[getTableSize()];
+    }
+
+    public void addValue(Object value) {
+        int index = getAvailableIndex();
+        values[index] = value;
+    }
+
+    public Object[] getValues() {
+        return values;
+    }
+
+    private int getAvailableIndex() {
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] == null) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int getTableSize() {
+        return TABLE_SIZE; // Tamaño de la tabla de dispersión
+    }
+}
+
+
+public void guardarColumnaEnHashtable() {
+    JFileChooser fileChooser = new JFileChooser();
+    int result = fileChooser.showOpenDialog(null);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+
+        try {
+            FileInputStream fis = new FileInputStream(selectedFile);
+            Workbook workbook = new XSSFWorkbook(fis);
+
+            // Obtener la primera página del libro de Excel
+            Sheet sheet = workbook.getSheetAt(0);
+
+            for (Row row : sheet) {
+                Cell cell = row.getCell(0); // Obtener la celda en la primera columna
+
+                if (cell != null) {
+                    Object key = null;
+
+                    switch (cell.getCellType()) {
+                        case STRING:
+                            key = cell.getStringCellValue();
+                            break;
+                        case NUMERIC:
+                            key = cell.getNumericCellValue();
+                            break;
+                    }
+
+                    if (key != null) {
+                        
+                        agregar(key, row);
+                    }
+                }
+            }
+
+            workbook.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+public void imprimirKeysYValues() {
+    for (Entry entry : table) {
+        if (entry != null) {
+            Entry currentEntry = entry;
+            while (currentEntry != null) {
+                System.out.println("Key: " + currentEntry.getKey() + ", Value: " + currentEntry.getValue());
+                currentEntry = currentEntry.getNext();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+   
+}
+    
+
+
+   
+   
+
+
+    
+
+
+    
+
 
 
 
