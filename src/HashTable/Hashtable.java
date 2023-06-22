@@ -10,16 +10,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import static Funciones.Excel.printSecondColumnElements;
-import static Funciones.Excel.readExcelSecondColumn;
-import java.util.Iterator;
-import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.DateUtil;
+import javax.swing.JTextArea;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -28,8 +28,8 @@ import org.apache.poi.ss.usermodel.DateUtil;
 
 public class Hashtable {
 
-    private Entry[] table;
-    private static final int TABLE_SIZE = 10; // Tamaño de la tabla de dispersión
+    public Entry[] table;
+    public static final int TABLE_SIZE = 10; // Tamaño de la tabla de dispersión
 
     public Hashtable() {
         table = new Entry[TABLE_SIZE];
@@ -130,7 +130,7 @@ public class Hashtable {
         System.out.println("El cliente " + key + " no existe");
     }
 
-    private int getHash(Object key) {
+    public int getHash(Object key) {
         int hash = key.hashCode() % TABLE_SIZE;
         if (hash < 0) {
             hash += TABLE_SIZE;
@@ -138,10 +138,10 @@ public class Hashtable {
         return hash;
     }
 
-    private static class Entry {
-        private Object key;
-        private Object value;
-        private Entry next;
+    public static class Entry {
+        public Object key;
+        public Object value;
+        public Entry next;
 
         public Entry(Object key, Object value) {
             this.key = key;
@@ -182,11 +182,24 @@ public class Hashtable {
     public void imprimirValues() {
     for (Entry entry : table) {
         while (entry != null) {
-            System.out.println(entry.getValue());
+            Object[] values = (Object[]) entry.getValue();
+            if (values != null) {
+                for (Object value : values) {
+                    if (value != null) {
+                        System.out.println(value.toString());
+                    } else {
+                        System.out.println("Valor nulo");
+                    }
+                }
+            } else {
+                System.out.println("Valor nulo");
+            }
             entry = entry.getNext();
         }
     }
 }
+
+
 
     
     public void guardarElementosEnHashtable() {
@@ -352,6 +365,7 @@ public class Hashtable {
                             System.out.println("La habitación " + key + " está libre");
                         } else {
                             agregar(key, value);
+                            
                         }
                     }
                 }
@@ -399,7 +413,7 @@ public class Hashtable {
     }
 }
    
-   private Object getCellValue(Cell cell) {
+   public Object getCellValue(Cell cell) {
     switch (cell.getCellType()) {
         case STRING:
             return cell.getStringCellValue();
@@ -416,8 +430,8 @@ public class Hashtable {
     }
 }
 
-private class RowValue {
-    private Object[] values;
+public class RowValue {
+    public Object[] values;
 
     public RowValue() {
         values = new Object[getTableSize()];
@@ -432,7 +446,7 @@ private class RowValue {
         return values;
     }
 
-    private int getAvailableIndex() {
+    public int getAvailableIndex() {
         for (int i = 0; i < values.length; i++) {
             if (values[i] == null) {
                 return i;
@@ -441,7 +455,7 @@ private class RowValue {
         return -1;
     }
 
-    private int getTableSize() {
+    public int getTableSize() {
         return TABLE_SIZE; // Tamaño de la tabla de dispersión
     }
 }
@@ -500,23 +514,183 @@ public void guardarColumnaEnHashtable() {
 
 
     
+public void mostrarClavesEnTextArea(JTextArea textArea) {
+    for (Entry entry : table) {
+        while (entry != null) {
+            Object key = entry.getKey();
+            if (!key.equals("primer_nombre apellido")) {
+                textArea.append(key.toString() + "\n");
+            }
+            entry = entry.getNext();
+        }
+    }
+}
 
 
 
 
 public void imprimirKeysYValues() {
     for (Entry entry : table) {
-        if (entry != null) {
-            Entry currentEntry = entry;
-            while (currentEntry != null) {
-                System.out.println("Key: " + currentEntry.getKey() + ", Value: " + currentEntry.getValue());
-                currentEntry = currentEntry.getNext();
+        while (entry != null) {
+            Object key = entry.getKey();
+            Object[] values = (Object[]) entry.getValue();
+
+            if (key != null && values != null) {
+                System.out.println("Key: " + key.toString());
+                for (Object value : values) {
+                    if (value != null) {
+                        System.out.println("Value: " + value.toString());
+                    } else {
+                        System.out.println("Value: Valor nulo");
+                    }
+                }
             }
+
+            entry = entry.getNext();
         }
     }
 }
 
 
+public String getCellValueAsString(Cell cell) {
+    switch (cell.getCellType()) {
+        case STRING:
+            return cell.getStringCellValue();
+        case NUMERIC:
+            return String.valueOf(cell.getNumericCellValue());
+        case BOOLEAN:
+            return String.valueOf(cell.getBooleanCellValue());
+        case FORMULA:
+            return cell.getCellFormula();
+        default:
+            return "";
+    }
+}
+
+public void obtenerDatosDesdeExcel() {
+    JFileChooser fileChooser = new JFileChooser();
+    int result = fileChooser.showOpenDialog(null);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        String filePath = selectedFile.getAbsolutePath();
+        BusquedaReservacion(filePath);
+    }
+}
+
+public void BusquedaReservacion(String filePath) {
+    try {
+        FileInputStream fis = new FileInputStream(filePath);
+        Workbook workbook = WorkbookFactory.create(fis);
+
+        // Obtener la primera página de Excel (índice 0)
+        Sheet sheet = workbook.getSheetAt(0);
+
+        for (Row row : sheet) {
+            Cell firstCell = row.getCell(0); // Obtener la primera celda (columna 0)
+
+            if (firstCell != null && firstCell.getCellType() == CellType.NUMERIC) {
+                int key = (int) firstCell.getNumericCellValue();
+                Object[] values = new Object[row.getLastCellNum() - 1];
+
+                // Recorrer las celdas a la derecha de la primera celda
+                for (int i = 1; i < row.getLastCellNum(); i++) {
+                    Cell cell = row.getCell(i);
+                    if (cell != null) {
+                        Object value = getCellValue(cell);
+                        values[i - 1] = value;
+                    }
+                }
+
+                agregar(key, values);
+            }
+        }
+
+        workbook.close();
+        fis.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+
+
+//public void BusquedaReservacion(String filePath) {
+//    try {
+//        FileInputStream fis = new FileInputStream(filePath);
+//        Workbook workbook = WorkbookFactory.create(fis);
+//
+//        // Obtener la primera página de Excel (índice 0)
+//        Sheet sheet = workbook.getSheetAt(0);
+//
+//        for (Row row : sheet) {
+//            Cell firstCell = row.getCell(0); // Obtener la primera celda (columna 0)
+//
+//            if (firstCell != null) {
+//                String key = getCellValueAsString(firstCell);
+//                Object[] values = new Object[row.getLastCellNum() - 1];
+//
+//                // Recorrer las celdas a la derecha de la primera celda
+//                for (int i = 1; i < row.getLastCellNum(); i++) {
+//                    Cell cell = row.getCell(i);
+//                    if (cell != null) {
+//                        Object value = getCellValue(cell);
+//                        values[i - 1] = value;
+//                    }
+//                }
+//
+//                agregar(key, values);
+//            }
+//        }
+//
+//        workbook.close();
+//        fis.close();
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+//}
+
+public void BuscarPorCedula(int key) {
+    
+
+    int hash = getHash(key);
+    Entry entry = table[hash];
+
+    while (entry != null) {
+        if (entry.getKey().equals(key)) {
+            Object[] values = (Object[]) entry.getValue();
+
+            if (values != null) {
+                StringBuilder message = new StringBuilder();
+                message.append("Ese cliente posee estos datos: ").append(key).append(":\n");
+
+                for (Object value : values) {
+                    if (value != null) {
+                        message.append(value.toString()).append("\n");
+                    } else {
+                        message.append("");
+                    }
+                }
+
+                JOptionPane.showMessageDialog(null, message.toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "Ese cliente no se ha registrado");
+            }
+
+            return;
+        }
+        entry = entry.getNext();
+    }
+
+    JOptionPane.showMessageDialog(null, "No existe ningun cliente que posea la cedula "+key);
+}
+
+
+
+
+
+    
+}
 
 
 
@@ -526,7 +700,7 @@ public void imprimirKeysYValues() {
 
 
    
-}
+
     
 
 

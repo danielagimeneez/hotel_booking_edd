@@ -6,6 +6,7 @@
 package Interfaces;
 import Funciones.Excel;
 import HashTable.Hashtable;
+import HashTable.Hashtable.Entry;
 import org.apache.poi.ss.usermodel.*;
 import javax.swing.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -139,7 +140,7 @@ public class Registrar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
+    public void RegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarActionPerformed
         // TODO add your handling code here:
         dispose();
         VentanaPrincipal MainMenu = new VentanaPrincipal();
@@ -150,11 +151,8 @@ public class Registrar extends javax.swing.JFrame {
         MainMenu.setVisible(true);
     }//GEN-LAST:event_RegresarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        //Aqui importe Scanner para probar los input.. No se porque esta fastidioso copiarlo a un JTextFile :(
-        //Hay que imprimir todos los nombres y apellidos en ese JTextFile y ponerlos en el HashTable.. la key podria ser el nombre y el apellido
-        //Y el value pordia ser el num de habitacion
+    public void registros2() {
+    Hashtable hashtable = new Hashtable();
     JFileChooser fileChooser = new JFileChooser();
     int result = fileChooser.showOpenDialog(null);
 
@@ -165,41 +163,76 @@ public class Registrar extends javax.swing.JFrame {
             FileInputStream fis = new FileInputStream(selectedFile);
             Workbook workbook = new XSSFWorkbook(fis);
 
-            // Obtener la tercera página del libro de Excel
+            // Obtener la tercera página de Excel (índice 2)
             Sheet sheet = workbook.getSheetAt(2);
 
-            // Crear un JTextArea para mostrar el contenido
-            JTextArea textArea = new JTextArea();
-
-            // Iterar por cada fila y obtener los valores de las celdas de la columna 2 y 3
             for (Row row : sheet) {
-                Cell cell2 = row.getCell(1); // Columna 2
-                Cell cell3 = row.getCell(2); // Columna 3
+                Cell cell2 = row.getCell(1); // Obtener la segunda celda (columna 2)
+                Cell cell3 = row.getCell(2); // Obtener la tercera celda (columna 3)
+                Cell cell1 = row.getCell(0); // Obtener la primera celda (columna 1)
 
-                if (cell2 != null && cell3 != null) {
-                    Object value2 = getCellValue(cell2);
-                    Object value3 = getCellValue(cell3);
+                if (cell2 != null && cell3 != null && cell1 != null) {
+                    Object key = null;
+                    Object value = null;
 
-                    // Verificar si el valor de la celda es "primer_nombre" o "apellido"
-                    if (!"primer_nombre".equals(value2) && !"apellido".equals(value3)) {
-                        // Agregar los valores al JTextArea
-                        ClientesImprimir.append(value2 + "\t" + value3 + "\n");
+                    switch (cell2.getCellType()) {
+                        case STRING:
+                            key = cell2.getStringCellValue();
+                            break;
+                        case NUMERIC:
+                            key = cell2.getNumericCellValue();
+                            break;
+                    }
+
+                    switch (cell3.getCellType()) {
+                        case STRING:
+                            key += " " + cell3.getStringCellValue();
+                            break;
+                        case NUMERIC:
+                            key += " " + cell3.getNumericCellValue();
+                            break;
+                    }
+
+                    switch (cell1.getCellType()) {
+                        case STRING:
+                            value = cell1.getStringCellValue();
+                            break;
+                        case NUMERIC:
+                            value = cell1.getNumericCellValue();
+                            break;
+                    }
+
+                    if (key != null) {
+                        if (value == null) {
+                            System.out.println("La habitación " + key + " está libre");
+                        } else {
+                            hashtable.agregar(key, value);
+                            hashtable.mostrarClavesEnTextArea(ClientesImprimir);
+                        }
                     }
                 }
             }
 
-            
-
             workbook.close();
             fis.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
 
-private Object getCellValue(Cell cell) {
+
+    
+    
+    public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //Aqui importe Scanner para probar los input.. No se porque esta fastidioso copiarlo a un JTextFile :(
+        //Hay que imprimir todos los nombres y apellidos en ese JTextFile y ponerlos en el HashTable.. la key podria ser el nombre y el apellido
+        //Y el value pordia ser el num de habitacion
+        registros2();
+    }
+
+public Object getCellValue(Cell cell) {
     switch (cell.getCellType()) {
         case STRING:
             return cell.getStringCellValue();
@@ -499,11 +532,11 @@ private Object getCellValue(Cell cell) {
     
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void ApellidoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoBuscarActionPerformed
+    public void ApellidoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ApellidoBuscarActionPerformed
 
-    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+    public void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
         // TODO add your handling code here:
         Hashtable hashtable = new Hashtable();
         //hashtable.guardarElementosEnHashtable();
@@ -562,7 +595,7 @@ private Object getCellValue(Cell cell) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ApellidoBuscar;
     private javax.swing.JButton Buscar;
-    private javax.swing.JTextArea ClientesImprimir;
+    public javax.swing.JTextArea ClientesImprimir;
     private javax.swing.JButton Regresar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

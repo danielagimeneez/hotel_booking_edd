@@ -31,7 +31,7 @@ public class Check_In extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    public void initComponents() {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -206,7 +206,7 @@ public class Check_In extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         dispose();
         VentanaPrincipal MainMenu = new VentanaPrincipal();
@@ -218,15 +218,15 @@ public class Check_In extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
+    public void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreActionPerformed
 
-    private void HabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HabitacionActionPerformed
+    public void HabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HabitacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HabitacionActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    public void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         //Porfa usen una funcion para verificar si todos los datos son correctos, por ejemplo, el programa explota si Habitacion esta vacia o es un String
         String Disponible = Habitacion.getText();
@@ -235,13 +235,6 @@ public class Check_In extends javax.swing.JFrame {
         if (Habitacion.getText().isEmpty())
         if (resultado == true){
             JOptionPane.showMessageDialog(rootPane, "Usuario registrado con exito");
-            Hashtable hashtable = new Hashtable();
-            //Agregar por cedula
-            hashtable.agregar(Cedula.getText(), Nombre.getText());
-            //Agregar por nombre
-            hashtable.agregar(Nombre.getText(), Habitacion.getText());
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "La habitacion numero "+ Disponible+" esta ocupada");
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -284,25 +277,25 @@ public class Check_In extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Apellido;
-    private javax.swing.JTextField Cedula;
-    private javax.swing.JTextField Correo;
-    private javax.swing.JComboBox<String> Gender;
-    private javax.swing.JTextField H_Llegada;
-    private javax.swing.JTextField H_Salida;
-    private javax.swing.JTextField Habitacion;
-    private javax.swing.JTextField Nombre;
-    private javax.swing.JTextField Phone;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
+    public javax.swing.JTextField Apellido;
+    public javax.swing.JTextField Cedula;
+    public javax.swing.JTextField Correo;
+    public javax.swing.JComboBox<String> Gender;
+    public javax.swing.JTextField H_Llegada;
+    public javax.swing.JTextField H_Salida;
+    public javax.swing.JTextField Habitacion;
+    public javax.swing.JTextField Nombre;
+    public javax.swing.JTextField Phone;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel10;
+    public javax.swing.JLabel jLabel11;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    public javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }

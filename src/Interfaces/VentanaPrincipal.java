@@ -34,7 +34,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    public void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         RegistrosDeClientes = new javax.swing.JButton();
@@ -153,13 +153,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         System.exit(0);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void RegistrosDeClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrosDeClientesActionPerformed
+    public void RegistrosDeClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrosDeClientesActionPerformed
         // TODO add your handling code here:
         dispose();
         Registrar register = new Registrar();
@@ -170,7 +170,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         register.setVisible(true);
     }//GEN-LAST:event_RegistrosDeClientesActionPerformed
 
-    private void BusquedaDeReservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaDeReservacionActionPerformed
+    public void BusquedaDeReservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaDeReservacionActionPerformed
         // TODO add your handling code here:
         dispose();
         BusquedaDeReserva BusquedaReservacion = new BusquedaDeReserva();
@@ -181,7 +181,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         BusquedaReservacion.setVisible(true);
     }//GEN-LAST:event_BusquedaDeReservacionActionPerformed
 
-    private void HistorialDeHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HistorialDeHabitacionActionPerformed
+    public void HistorialDeHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HistorialDeHabitacionActionPerformed
         // TODO add your handling code here:
         dispose();
         HistorialDeHabitacion historialdehabitacion = new HistorialDeHabitacion();
@@ -193,7 +193,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_HistorialDeHabitacionActionPerformed
 
-    private void CheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckInActionPerformed
+    public void CheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckInActionPerformed
         // TODO add your handling code here:
         dispose();
         Check_In checkin = new Check_In();
@@ -204,7 +204,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         checkin.setVisible(true);
     }//GEN-LAST:event_CheckInActionPerformed
 
-    private void CheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckOutActionPerformed
+    public void CheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckOutActionPerformed
         // TODO add your handling code here:
         dispose();
         Checkout chekis = new Checkout();
@@ -215,7 +215,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         chekis.setVisible(true);
     }//GEN-LAST:event_CheckOutActionPerformed
 
-    private void CargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarArchivoActionPerformed
+    public void CargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarArchivoActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
 
@@ -239,7 +239,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
 
-    private static void cargarArchivoExcel(File file) throws IOException {
+    public static void cargarArchivoExcel(File file) throws IOException {
         FileInputStream fileInputStream = new FileInputStream(file);
         Workbook workbook = WorkbookFactory.create(fileInputStream);
 
@@ -307,13 +307,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BusquedaDeReservacion;
-    private javax.swing.JButton CargarArchivo;
-    private javax.swing.JButton CheckIn;
-    private javax.swing.JButton CheckOut;
-    private javax.swing.JButton HistorialDeHabitacion;
-    private javax.swing.JButton RegistrosDeClientes;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    public javax.swing.JButton BusquedaDeReservacion;
+    public javax.swing.JButton CargarArchivo;
+    public javax.swing.JButton CheckIn;
+    public javax.swing.JButton CheckOut;
+    public javax.swing.JButton HistorialDeHabitacion;
+    public javax.swing.JButton RegistrosDeClientes;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

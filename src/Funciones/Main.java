@@ -22,7 +22,7 @@ public class Main {
         MainMenu.setSize(600, 400);
         MainMenu.setResizable(false);
         MainMenu.setTitle("Hotel");
-        MainMenu.setVisible(true);
+        MainMenu.setVisible(true); 
         Hashtable hashtable = new Hashtable();
 
         // Agregar elementos a la Hashtable

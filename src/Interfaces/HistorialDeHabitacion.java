@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Interfaces;
+import HashTable.Hashtable;
 
 /**
  *
@@ -25,7 +26,7 @@ public class HistorialDeHabitacion extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    public void initComponents() {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -72,7 +73,7 @@ public class HistorialDeHabitacion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    public void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         dispose();
         VentanaPrincipal MainMenu = new VentanaPrincipal();
@@ -83,8 +84,13 @@ public class HistorialDeHabitacion extends javax.swing.JFrame {
         MainMenu.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    public void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        Hashtable hashtable = new Hashtable();
+        hashtable.obtenerDatosDesdeExcel();
+        Object key = "clave";
+        hashtable.buscarValor(key);
+        
         
         
         //Todos los datos de este ya estan en la parte de registros.. hay que acomodarlas en el ABB para que quede bien
@@ -129,7 +135,7 @@ public class HistorialDeHabitacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 }
