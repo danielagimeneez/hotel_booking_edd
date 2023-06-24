@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package Interfaces;
-
+import Funciones.Robustez;
 import static Funciones.Excel.verificarNumeroEnColumnaPagina3;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import HashTable.Hashtable;
+import java.awt.List;
+import java.awt.TextField;
 
 /**
  *
@@ -23,7 +25,7 @@ public class Check_In extends javax.swing.JFrame {
         initComponents();
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -222,20 +224,138 @@ public class Check_In extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreActionPerformed
 
+    public void verificarCampos(JTextField[] textFields) {
+    boolean todosLlenos = true;
+
+    for (JTextField textField : textFields) {
+        if (textField.getText().isEmpty()) {
+            todosLlenos = false;
+            JOptionPane.showMessageDialog(rootPane, "Falto algun espacio por rellenar");
+            break;
+        }
+    }
+
+    
+}
+    public boolean EsLetra(JTextField textField) {
+    String texto = textField.getText();
+    try {
+        Integer.parseInt(texto); // Intenta convertir el texto a un número entero
+        JOptionPane.showMessageDialog(rootPane, "El apartado Nombre y apellido solo puede contener letras");
+        return false; // Si no se lanza una excepción, el texto es un número entero
+    } catch (NumberFormatException e) {
+         
+        return true;
+    }
+}
+    
+    public boolean EsNumero(JTextField textField) {
+    String texto = textField.getText();
+    try {
+        Integer.parseInt(texto);
+        // Intenta convertir el texto a un número entero
+        
+
+        return true; // Si no se lanza una excepción, el texto es un número entero
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(rootPane, "El apartado Cedula,Numero de Habitacion, telefono y Horas de llegada y salida, solo puede contener numeros");
+        return false;
+    }
+}
+
+    public boolean verificarFormatoFecha(JTextField textField) {
+    String texto = textField.getText();
+    String formatoFecha = "\\d{2}/\\d{2}/\\d{4}";
+
+    if (texto.matches(formatoFecha)) {
+        return true;
+    } else {
+        JOptionPane.showMessageDialog(rootPane, "Fecha Invalida");
+        return false;
+    }
+}
+
+
+    public boolean verificarCorreo(JTextField textField) {
+    String texto = textField.getText();
+    int contadorArroba = 0;
+    int contadorPunto = 0;
+
+    for (char c : texto.toCharArray()) {
+        if (c == '@') {
+            contadorArroba++;
+        } else if (c == '.') {
+            contadorPunto++;
+        }
+    }
+
+    if (contadorArroba == 1 && contadorPunto == 1) {
+        return true;
+    } else {
+        
+        JOptionPane.showMessageDialog(rootPane, "Correo Invalido");
+        return false;
+    }
+    }
+
+    public boolean VerificarArreglo(boolean[] arreglo) {
+    for (boolean elemento : arreglo) {
+        if (!elemento) {
+            JOptionPane.showMessageDialog(rootPane, "Ocurrio un error inesperado");
+            return false;
+        }
+    }
+    JOptionPane.showMessageDialog(rootPane, "Te registraste fino");
+    return true;
+}
+    
+    public boolean verificarResultados(JTextField Nombre, JTextField Apellido, JTextField Correo, JTextField Cedula, JTextField H_Llegada, JTextField H_Salida, JTextField Phone) {
+        boolean resultado1 = EsLetra(Nombre);
+        boolean resultado2 = EsLetra(Apellido);
+        boolean resultado3 = EsNumero(Cedula);
+        boolean resultado4 = verificarCorreo(Correo);
+        boolean resultado5 = verificarFormatoFecha(H_Llegada);
+        boolean resultado6 = verificarFormatoFecha(H_Salida);
+        boolean resultado7 = EsNumero(Phone);
+        System.err.println(resultado1);
+        System.err.println(resultado2);
+        System.err.println(resultado3);
+        System.err.println(resultado4);
+        System.err.println(resultado5);
+        System.err.println(resultado6);
+        System.err.println(resultado7);
+
+        if (resultado1 && resultado2 && resultado3 && resultado4 && resultado5 && resultado6 && resultado7){
+            JOptionPane.showMessageDialog(rootPane, "Te registraste exitosamente !");
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Ocurrio un error en tu registro");
+            return false;
+        }
+    }
+
+    
     public void HabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HabitacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HabitacionActionPerformed
-
+    
     public void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        //Porfa usen una funcion para verificar si todos los datos son correctos, por ejemplo, el programa explota si Habitacion esta vacia o es un String
-        String Disponible = Habitacion.getText();
-        int DisponibleNumero = Integer.parseInt(Disponible);
-        boolean resultado = verificarNumeroEnColumnaPagina3(DisponibleNumero);
-        if (Habitacion.getText().isEmpty())
-        if (resultado == true){
-            JOptionPane.showMessageDialog(rootPane, "Usuario registrado con exito");
-        }
+        JTextField[] campos = {Nombre,Cedula,Phone,Apellido,Correo,Habitacion,H_Llegada,H_Salida};
+        verificarCampos(campos);
+//        EsLetra(Nombre);
+//        EsLetra(Apellido);
+//        EsNumero(Cedula);
+//        verificarCorreo(Correo);
+        //La fecha tiene que ser asi: 02/10/2020
+//        verificarFormatoFecha(H_Llegada);
+//        verificarFormatoFecha(H_Salida);
+        verificarResultados(Nombre, Apellido, Correo, Cedula, H_Llegada, H_Salida, Phone);
+        //System.err.println(Gender.getSelectedItem());
+        Hashtable hashtable = new Hashtable();
+        hashtable.imprimirKeys();
+        //Falta lo de ver si la Hbitacion esta llena o Vacia y agregarlo a la hashtable
+       
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

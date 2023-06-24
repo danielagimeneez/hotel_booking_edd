@@ -541,8 +541,8 @@ public Object getCellValue(Cell cell) {
         Hashtable hashtable = new Hashtable();
         //hashtable.guardarElementosEnHashtable();
         hashtable.registros();
-        hashtable.imprimirValues();
         //hashtable.imprimirKeys();
+        //hashtable.imprimirValues();
         //Falta decir cuando la habitacion esta vacia y cuando no
         String juan = ApellidoBuscar.getText();
         hashtable.buscarValor2(juan);

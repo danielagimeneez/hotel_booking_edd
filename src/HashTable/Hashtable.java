@@ -51,6 +51,9 @@ public class Hashtable {
         entry.setNext(table[hash]);
         table[hash] = entry;
     }
+    
+    
+    
 
     public void buscarValor(Object key) {
         int hash = getHash(key);
@@ -75,18 +78,21 @@ public class Hashtable {
     while (entry != null) {
         if (entry.getKey().equals(key)) {
             Object value = entry.getValue();
-        if (value == null) {
-            System.out.println("La habitación " + key + " está libre");
-        } else {
-            System.out.println("El cliente " + key + " está hospedado en la habitación " + value);
+            if (value == null) {
+                JOptionPane.showMessageDialog(null, "La habitación " + key + " está libre");
+            } else {
+                String valueString = value.toString();
+                JOptionPane.showMessageDialog(null, "El cliente " + key + " está hospedado en la habitación " + valueString);
+            }
+            return;
         }
-        return;
-    }
         entry = entry.getNext();
     }
 
-    System.out.println("El cliente " + key + " no existe");
+    JOptionPane.showMessageDialog(null, "El cliente " + key + " no existe");
 }
+
+
 
     
     
@@ -310,74 +316,149 @@ public class Hashtable {
     }
 }
     
-   public void registros() {
-    JFileChooser fileChooser = new JFileChooser();
-    int result = fileChooser.showOpenDialog(null);
+    public void registros() {
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(null);
 
-    if (result == JFileChooser.APPROVE_OPTION) {
-        File selectedFile = fileChooser.getSelectedFile();
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
 
-        try {
-            FileInputStream fis = new FileInputStream(selectedFile);
-            Workbook workbook = new XSSFWorkbook(fis);
+            try {
+                FileInputStream fis = new FileInputStream(selectedFile);
+                Workbook workbook = new XSSFWorkbook(fis);
 
-            // Obtener la tercera página de Excel (índice 2)
-            Sheet sheet = workbook.getSheetAt(2);
+                // Obtener la tercera página de Excel (índice 2)
+                Sheet sheet = workbook.getSheetAt(2);
 
-            for (Row row : sheet) {
-                Cell cell2 = row.getCell(1); // Obtener la segunda celda (columna 2)
-                Cell cell3 = row.getCell(2); // Obtener la tercera celda (columna 3)
-                Cell cell1 = row.getCell(0); // Obtener la primera celda (columna 1)
+                for (Row row : sheet) {
+                    Cell cell2 = row.getCell(1); // Obtener la segunda celda (columna 2)
+                    Cell cell3 = row.getCell(2); // Obtener la tercera celda (columna 3)
+                    Cell cell1 = row.getCell(0); // Obtener la primera celda (columna 1)
 
-                if (cell2 != null && cell3 != null && cell1 != null) {
-                    Object key = null;
-                    Object value = null;
+                    if (cell2 != null && cell3 != null && cell1 != null) {
+                        String key = null;
+                        String value = null;
 
-                    switch (cell2.getCellType()) {
-                        case STRING:
-                            key = cell2.getStringCellValue();
-                            break;
-                        case NUMERIC:
-                            key = cell2.getNumericCellValue();
-                            break;
-                    }
+                        switch (cell2.getCellType()) {
+                            case STRING:
+                                key = cell2.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                key = String.valueOf(cell2.getNumericCellValue());
+                                break;
+                        }
 
-                    switch (cell3.getCellType()) {
-                        case STRING:
-                            key += " " + cell3.getStringCellValue();
-                            break;
-                        case NUMERIC:
-                            key += " " + cell3.getNumericCellValue();
-                            break;
-                    }
+                        switch (cell3.getCellType()) {
+                            case STRING:
+                                key = key + " " + cell3.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                key = key + " " + String.valueOf(cell3.getNumericCellValue());
+                                break;
+                        }
 
-                    switch (cell1.getCellType()) {
-                        case STRING:
-                            value = cell1.getStringCellValue();
-                            break;
-                        case NUMERIC:
-                            value = cell1.getNumericCellValue();
-                            break;
-                    }
+                        switch (cell1.getCellType()) {
+                            case STRING:
+                                value = cell1.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                value = String.valueOf(cell1.getNumericCellValue());
+                                break;
+                        }
 
-                    if (key != null) {
-                        if (value == null) {
-                            System.out.println("La habitación " + key + " está libre");
-                        } else {
-                            agregar(key, value);
-                            
+                        if (key != null) {
+                            if (value == null) {
+                                System.out.println("La habitación " + key + " está libre");
+                            } else {
+                                agregar(key, value);
+                            }
                         }
                     }
                 }
-            }
 
-            workbook.close();
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+                workbook.close();
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
+
+
+
+    
+    
+//   public void registros() {
+//    JFileChooser fileChooser = new JFileChooser();
+//    int result = fileChooser.showOpenDialog(null);
+//
+//    if (result == JFileChooser.APPROVE_OPTION) {
+//        File selectedFile = fileChooser.getSelectedFile();
+//
+//        try {
+//            FileInputStream fis = new FileInputStream(selectedFile);
+//            Workbook workbook = new XSSFWorkbook(fis);
+//
+//            // Obtener la tercera página de Excel (índice 2)
+//            Sheet sheet = workbook.getSheetAt(2);
+//
+//            for (Row row : sheet) {
+//                Cell cell2 = row.getCell(1); // Obtener la segunda celda (columna 2)
+//                Cell cell3 = row.getCell(2); // Obtener la tercera celda (columna 3)
+//                Cell cell1 = row.getCell(0); // Obtener la primera celda (columna 1)
+//
+//                if (cell2 != null && cell3 != null && cell1 != null) {
+//                    Object key = null;
+//                    Object value = null;
+//
+//                    switch (cell2.getCellType()) {
+//                        case STRING:
+//                            key = cell2.getStringCellValue();
+//                            break;
+//                        case NUMERIC:
+//                            key = cell2.getNumericCellValue();
+//                            break;
+//                    }
+//
+//                    switch (cell3.getCellType()) {
+//                        case STRING:
+//                            key += " " + cell3.getStringCellValue();
+//                            break;
+//                        case NUMERIC:
+//                            key += " " + cell3.getNumericCellValue();
+//                            break;
+//                    }
+//
+//                    switch (cell1.getCellType()) {
+//                        case STRING:
+//                            value = cell1.getStringCellValue();
+//                            break;
+//                        case NUMERIC:
+//                            value = cell1.getNumericCellValue();
+//                            break;
+//                    }
+//
+//                    if (key != null) {
+//                        if (value == null) {
+//                            System.out.println("La habitación " + key + " está libre");
+//                        } else {
+//                            agregar(key, value);
+//                            
+//                        }
+//                    }
+//                }
+//            }
+//
+//            workbook.close();
+//            fis.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
+   
+   
+   
    
    
    
