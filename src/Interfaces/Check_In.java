@@ -33,7 +33,7 @@ public class Check_In extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    public void initComponents() {
+    private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -47,14 +47,16 @@ public class Check_In extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         Phone = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        Gender = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         Habitacion = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         H_Salida = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         H_Llegada = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        Registrar = new javax.swing.JButton();
+        Gender = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        N_Habitacion = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,9 +85,7 @@ public class Check_In extends javax.swing.JFrame {
 
         jLabel6.setText("Ingresa tu genero");
 
-        Gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hombre ", "Mujer", "Otro" }));
-
-        jLabel9.setText("Numero de habitacion");
+        jLabel9.setText("Tipo de Habitacion");
 
         Habitacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,52 +93,63 @@ public class Check_In extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setText("Hora de salida");
+        jLabel10.setText("Fecha de salida");
 
-        jLabel11.setText("Hora de llegada");
+        jLabel11.setText("Fecha de llegada ");
 
-        jButton2.setText("Registrarse");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Registrar.setText("Registrarse");
+        Registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                RegistrarActionPerformed(evt);
             }
         });
+
+        jLabel7.setText("Numero de Habitacion");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
-                            .addComponent(Cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Cedula, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                            .addComponent(Phone, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                             .addComponent(jLabel5))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Correo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
-                                    .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
-                                        .addComponent(jLabel6)))
+                                        .addComponent(jLabel6))
+                                    .addComponent(Gender, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
                                     .addComponent(H_Llegada, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10)
-                                    .addComponent(H_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(H_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(Registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(N_Habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel7))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
@@ -148,10 +159,6 @@ public class Check_In extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(Habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(33, 33, 33))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +176,7 @@ public class Check_In extends javax.swing.JFrame {
                     .addComponent(Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -184,14 +191,18 @@ public class Check_In extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addComponent(jLabel6)))
+                                .addComponent(Phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(N_Habitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(Registrar)
+                        .addGap(15, 15, 15))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -199,10 +210,8 @@ public class Check_In extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(H_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(27, 27, 27))
+                        .addComponent(H_Salida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -270,7 +279,7 @@ public class Check_In extends javax.swing.JFrame {
     if (texto.matches(formatoFecha)) {
         return true;
     } else {
-        JOptionPane.showMessageDialog(rootPane, "Fecha Invalida");
+        JOptionPane.showMessageDialog(rootPane, "Fecha Invalida por favor, respete este formato: 01/01/2001");
         return false;
     }
 }
@@ -333,31 +342,31 @@ public class Check_In extends javax.swing.JFrame {
             return false;
         }
     }
+    
+    
 
     
     public void HabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HabitacionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_HabitacionActionPerformed
     
-    public void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    public void RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrarActionPerformed
         // TODO add your handling code here:
         JTextField[] campos = {Nombre,Cedula,Phone,Apellido,Correo,Habitacion,H_Llegada,H_Salida};
         verificarCampos(campos);
-//        EsLetra(Nombre);
-//        EsLetra(Apellido);
-//        EsNumero(Cedula);
-//        verificarCorreo(Correo);
-        //La fecha tiene que ser asi: 02/10/2020
-//        verificarFormatoFecha(H_Llegada);
-//        verificarFormatoFecha(H_Salida);
         verificarResultados(Nombre, Apellido, Correo, Cedula, H_Llegada, H_Salida, Phone);
-        //System.err.println(Gender.getSelectedItem());
-        Hashtable hashtable = new Hashtable();
-        hashtable.imprimirKeys();
-        //Falta lo de ver si la Hbitacion esta llena o Vacia y agregarlo a la hashtable
+        if (verificarResultados(Nombre, Apellido, Correo, Cedula, H_Llegada, H_Salida, Phone)){
+            Hashtable hashtable = new Hashtable();
+            String filePath = "C:\\Users\\Asdrubal Rivas\\Desktop\\MEJOR TRIMESTRE\\Booking_hotel.xlsx";
+            hashtable.GuardarCheckInCedula(filePath, Cedula,Nombre,Apellido,Correo,Gender,Habitacion,Phone,H_Llegada,H_Salida);
+            hashtable.GuardarCheckInRegistro(filePath, N_Habitacion,Nombre,Apellido);
+        }
+        
+        
+        
        
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_RegistrarActionPerformed
 
     
 
@@ -397,25 +406,27 @@ public class Check_In extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField Apellido;
-    public javax.swing.JTextField Cedula;
-    public javax.swing.JTextField Correo;
-    public javax.swing.JComboBox<String> Gender;
-    public javax.swing.JTextField H_Llegada;
-    public javax.swing.JTextField H_Salida;
-    public javax.swing.JTextField Habitacion;
-    public javax.swing.JTextField Nombre;
-    public javax.swing.JTextField Phone;
-    public javax.swing.JButton jButton1;
-    public javax.swing.JButton jButton2;
-    public javax.swing.JLabel jLabel1;
-    public javax.swing.JLabel jLabel10;
-    public javax.swing.JLabel jLabel11;
-    public javax.swing.JLabel jLabel2;
-    public javax.swing.JLabel jLabel3;
-    public javax.swing.JLabel jLabel4;
-    public javax.swing.JLabel jLabel5;
-    public javax.swing.JLabel jLabel6;
-    public javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField Apellido;
+    private javax.swing.JTextField Cedula;
+    private javax.swing.JTextField Correo;
+    private javax.swing.JTextField Gender;
+    private javax.swing.JTextField H_Llegada;
+    private javax.swing.JTextField H_Salida;
+    private javax.swing.JTextField Habitacion;
+    private javax.swing.JTextField N_Habitacion;
+    private javax.swing.JTextField Nombre;
+    private javax.swing.JTextField Phone;
+    private javax.swing.JButton Registrar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }

@@ -131,6 +131,7 @@ public class BusquedaDeReserva extends javax.swing.JFrame {
             hashtable.obtenerDatosDesdeExcel();
             String key = Cedula.getText();
             int keys = Integer.parseInt(key);
+            hashtable.imprimirKeys();
                 hashtable.BuscarPorCedula(keys);
             }
         

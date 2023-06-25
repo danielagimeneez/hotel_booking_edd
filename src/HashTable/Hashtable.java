@@ -8,6 +8,7 @@ package HashTable;
 import Funciones.Excel;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.DateUtil;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
@@ -730,6 +732,102 @@ public void BusquedaReservacion(String filePath) {
 //        e.printStackTrace();
 //    }
 //}
+
+public void GuardarCheckInCedula(String filePath, JTextField textField1, JTextField textField2, JTextField textField3,
+                                 JTextField textField4, JTextField textField5, JTextField textField6,
+                                 JTextField textField7, JTextField textField8, JTextField textField9) {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheet("reservas");
+            if (sheet == null) {
+                sheet = workbook.createSheet("reservas");
+            }
+
+            // Obtener la última fila existente en la hoja
+            int lastRowNum = sheet.getLastRowNum();
+
+            // Crear una nueva fila en la siguiente posición
+            int newRowNum = lastRowNum + 1;
+            Row row = sheet.createRow(newRowNum);
+
+            // Escribir en las celdas correspondientes
+            Cell cell1 = row.createCell(0);
+            cell1.setCellValue(Integer.parseInt(textField1.getText()));
+
+            Cell cell2 = row.createCell(1);
+            cell2.setCellValue(textField2.getText());
+
+            Cell cell3 = row.createCell(2);
+            cell3.setCellValue(textField3.getText());
+
+            Cell cell4 = row.createCell(3);
+            cell4.setCellValue(textField4.getText());
+
+            Cell cell5 = row.createCell(4);
+            cell5.setCellValue(textField5.getText());
+
+            Cell cell6 = row.createCell(5);
+            cell6.setCellValue(textField6.getText());
+
+            Cell cell7 = row.createCell(6);
+            cell7.setCellValue(Integer.parseInt(textField7.getText()));
+
+            Cell cell8 = row.createCell(7);
+            cell8.setCellValue(textField8.getText());
+
+            Cell cell9 = row.createCell(8);
+            cell9.setCellValue(textField9.getText());
+
+            // Guardar los cambios en el archivo Excel existente
+            try (FileOutputStream fos = new FileOutputStream(filePath)) {
+                workbook.write(fos);
+                System.out.println("Corrio Fino");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+public void GuardarCheckInRegistro(String filePath, JTextField textField1, JTextField textField2, JTextField textField3) {
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheet("estado");
+            if (sheet == null) {
+                sheet = workbook.createSheet("estado");
+            }
+
+            // Obtener la última fila existente en la hoja
+            int lastRowNum = sheet.getLastRowNum();
+
+            // Crear una nueva fila en la siguiente posición
+            int newRowNum = lastRowNum + 1;
+            Row row = sheet.createRow(newRowNum);
+
+            // Escribir en las celdas correspondientes
+            Cell cell1 = row.createCell(0);
+            cell1.setCellValue(Integer.parseInt(textField1.getText()));
+
+            Cell cell2 = row.createCell(1);
+            cell2.setCellValue(textField2.getText());
+
+            Cell cell3 = row.createCell(2);
+            cell3.setCellValue(textField3.getText());
+
+
+            // Guardar los cambios en el archivo Excel existente
+            try (FileOutputStream fos = new FileOutputStream(filePath)) {
+                workbook.write(fos);
+                System.out.println("Corrio fino");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 public void BuscarPorCedula(int key) {
     
